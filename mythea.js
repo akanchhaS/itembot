@@ -11,7 +11,6 @@ module.exports = {
     twphoneto: 'to_phone',
     twphonefrom: 'from_phone'
 }
-
 */
 
 (async () => {
@@ -53,7 +52,6 @@ module.exports = {
     // the way the page works is that AJAX calls auto-refresh
     while (1)
     {
-
       // Extract the value of the item sold
       const item = await page.evaluate(() => {
       const anchors = Array.from(document.querySelectorAll('#auction > center > span'));
@@ -75,7 +73,6 @@ module.exports = {
       console.log("----")
 
       // check if item is in watchlist
-
       for (i = 0; i < watchitems.length; i++)
       {
           if (String(item) == watchitems[i])
@@ -99,10 +96,10 @@ module.exports = {
       console.log("Frequency: " + itemfrequency);
       console.log("Price: " + itemprice)
 
+      // check every 60s
       await sleep(60000)
 
     } // end while
-
 
     // sleep function
     function sleep(ms)
