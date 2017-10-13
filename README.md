@@ -8,3 +8,7 @@ nodejs
 puppeteer
 
 twilio
+
+## Usage
+
+```node mythea.js```
