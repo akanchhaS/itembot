@@ -20,7 +20,7 @@ module.exports = {
     var client = new twilio(CREDS.twsid, CREDS.twauth);
 
     // define the array of items being watched
-    var watchitems = ["The Axe of Slaying"];
+    var watchitems = ["The Golden Hen"];
 
     // normally headless will be 'true' if its pure headless
     // here it is false because i want to keep an eye on the screen
@@ -32,7 +32,7 @@ module.exports = {
     const page = await browser.newPage();
 
     // go to the mythea page
-    await page.goto('http://www.mythea.com');
+    await page.goto('http://www.mythea.com', {"waitUntil" : "networkidle"});
     console.log("Entering mythea...");
 
     await page.click('#mainid > div > div > div:nth-child(6) > div > div:nth-child(2) > div > table > tbody > tr:nth-child(1) > td:nth-child(2) > input[type="TEXT"]');
