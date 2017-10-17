@@ -3,7 +3,7 @@ Used to look for certain items and then send an sms
 
 ## Software requirements
 
-nodejs
+nodejs (minimum 7.0, check using node --version)
 
 puppeteer
 
