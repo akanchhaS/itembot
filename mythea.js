@@ -20,7 +20,7 @@ module.exports = {
     var client = new twilio(CREDS.twsid, CREDS.twauth);
 
     // define the array of items being watched
-    var watchitems = ["The Golden Hen"];
+    var watchitems = ["The Book of Change"];
 
     // normally headless will be 'true' if its pure headless
     // here it is false because i want to keep an eye on the screen
