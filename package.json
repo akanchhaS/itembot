@@ -1,0 +1,16 @@
+{
+  "name": "item_bidder",
+  "version": "1.0.0",
+  "description": "automate item bidding",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.5.0",
+    "nodemailer": "^4.2.0",
+    "puppeteer": "^0.12.0"
+  }
+}
