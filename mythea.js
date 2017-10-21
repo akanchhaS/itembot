@@ -28,7 +28,7 @@ module.exports = {
     // normally headless will be 'true' if its pure headless
     // here it is false because i want to keep an eye on the screen
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         slowMo: 250 // slow down by 250ms
     });
 
