@@ -1,5 +1,8 @@
 const puppeteer = require('puppeteer');
 const CREDS = require('./creds');
+const SETTINGS = require('./settings');
+var email = require('./email');
+fs = require('fs');
 
 // creds is a file that looks like this:
 /*
@@ -10,6 +13,9 @@ module.exports = {
     twauth: 'twilio_authtoken',
     twphoneto: 'to_phone',
     twphonefrom: 'from_phone'
+    emailuser: 'whatsyouremail',
+    emailpw: 'whatsyouremailpw',
+    toemailaddresses: 'toemailaddresses'    
 }
 */
 
@@ -18,9 +24,6 @@ module.exports = {
     // initialize twilio
     var twilio = require('twilio')
     var client = new twilio(CREDS.twsid, CREDS.twauth);
-
-    // define the array of items being watched
-    var watchitems = ["The Book of Change"];
 
     // normally headless will be 'true' if its pure headless
     // here it is false because i want to keep an eye on the screen
@@ -72,21 +75,44 @@ module.exports = {
 
       console.log("----")
 
+      // taken from: https://stackoverflow.com/questions/6831918/node-js-read-a-text-file-into-an-array-each-line-an-item-in-the-array
+      var watchitems = fs.readFileSync(SETTINGS.itemfile).toString().split("\n");
+      console.log("Currently watched items:")
+      for(i in watchitems) {
+          console.log(i + " - " + watchitems[i]);
+      }
+
       // check if item is in watchlist
+      // watchlist is defined in a txt file
       for (i = 0; i < watchitems.length; i++)
       {
           if (String(item) == watchitems[i])
           {
-              msgbody = watchitems[i] + " found";
+              msgbody = watchitems[i];
 
-              client.messages.create({
-                to: CREDS.twphoneto,
-                from: CREDS.twphonefrom,
-                body: msgbody
-              });
+              console.log("ITEM FOUND: " + msgbody);              
 
-              console.log("ITEM FOUND: " + msgbody);
+              // send sms
+              // controlled in settings
+              if (SETTINGS.sendsms == 'yes')
+              {
+                console.log("sending sms")
+                client.messages.create({
+                    to: CREDS.twphoneto,
+                    from: CREDS.twphonefrom,
+                    body: msgbody
+                });
 
+              } // end if
+
+              // send an email
+              // controlled in settings
+              if (SETTINGS.sendemail == 'yes')
+              {   
+                  console.log("sending email")           
+                  email.send(CREDS.emailuser, CREDS.toemailaddresses, "ITEM FOUND - " + msgbody, "");
+              } // end if
+                      
           } // end if
 
       } // end for
@@ -94,10 +120,11 @@ module.exports = {
       console.log("Time: " + Date())
       console.log("Item: " + item);
       console.log("Frequency: " + itemfrequency);
-      console.log("Price: " + itemprice)
+      console.log("Price: " + itemprice)          
+  
 
-      // check every 60s
-      await sleep(60000)
+      // sleep for a period defined in the settings file
+      await sleep(SETTINGS.sleeptime)
 
     } // end while
 
