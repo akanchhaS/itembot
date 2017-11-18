@@ -4,6 +4,10 @@ const SETTINGS = require('./settings');
 var email = require('./email');
 fs = require('fs');
 
+// initialize twilio    
+var twilio = require('twilio')
+var client = new twilio(CREDS.twsid, CREDS.twauth);
+
 // creds is a file that looks like this:
 /*
 module.exports = {
@@ -21,9 +25,6 @@ module.exports = {
 
 (async () => {
 
-    // initialize twilio
-    var twilio = require('twilio')
-    var client = new twilio(CREDS.twsid, CREDS.twauth);
 
     // normally headless will be 'true' if its pure headless
     // here it is false because i want to keep an eye on the screen
